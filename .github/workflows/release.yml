@@ -15,7 +15,7 @@ jobs:
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
     - name: Build
       run: |
-        zip --junk-paths artifact.zip README.md
+        7z a artifact.zip README.md
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
