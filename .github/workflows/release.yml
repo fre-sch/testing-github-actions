@@ -1,4 +1,4 @@
-name: CI
+name: Build and Release
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
     - name: Build
       run: |
-        zip --junk-paths artifact-${{ steps.get_version.outputs.VERSION }} README.md
+        zip --junk-paths artifact.zip README.md
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -34,6 +34,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifact-${{ steps.get_version.outputs.VERSION }}.zip
+        asset_path: ./artifact.zip
         asset_name: artifact-${{ steps.get_version.outputs.VERSION }}.zip
         asset_content_type: application/zip
